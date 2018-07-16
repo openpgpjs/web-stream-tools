@@ -1,0 +1,16 @@
+{
+  "name": "web-stream-tools",
+  "version": "0.0.1",
+  "description": "Utility functions for WhatWG Streams",
+  "main": "lib/streams.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openpgpjs/streams.git"
+  },
+  "author": "Daniel Huigens <d.huigens@protonmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/openpgpjs/streams/issues"
+  },
+  "homepage": "https://github.com/openpgpjs/streams#readme"
+}
