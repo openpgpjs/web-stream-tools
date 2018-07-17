@@ -12,5 +12,11 @@
   "bugs": {
     "url": "https://github.com/openpgpjs/streams/issues"
   },
-  "homepage": "https://github.com/openpgpjs/streams#readme"
+  "homepage": "https://github.com/openpgpjs/streams#readme",
+  "devDependencies": {
+    "jsdoc": "~3.5.5"
+  },
+  "scripts": {
+    "docs": "jsdoc lib -d docs"
+  }
 }
