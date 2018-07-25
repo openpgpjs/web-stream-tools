@@ -17,6 +17,6 @@
     "jsdoc": "~3.5.5"
   },
   "scripts": {
-    "docs": "jsdoc lib -d docs"
+    "docs": "jsdoc lib -d docs --readme README.md"
   }
 }

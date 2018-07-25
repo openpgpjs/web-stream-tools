@@ -42,6 +42,77 @@
 
 
 
+    <section>
+        <article><h1>Web Stream Tools</h1><p>This library contains both basic convenience functions such as <code>readToEnd</code>, <code>concat</code>, <code>slice</code>, <code>clone</code>, <code>webToNode</code> and <code>nodeToWeb</code>, and more complex functions for transforming and parsing streams. Examples of the latter can be found below.</p>
+<h2>Table of Contents</h2><!-- MarkdownTOC autolink="true" -->
+<ul>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#examples">Examples</a><ul>
+<li><a href="#transforming-a-stream">Transforming a stream</a></li>
+<li><a href="#transforming-a-stream-in-chunks-of-1024-bytes">Transforming a stream in chunks of 1024 bytes</a></li>
+<li><a href="#parsing-data-on-a-stream-which-is-expected-to-be-in-a-specific-format">Parsing data on a stream which is expected to be in a specific format</a></li>
+<li><a href="#cloning-and-slicing-streams">Cloning and slicing streams</a></li>
+</ul>
+</li>
+</ul>
+<!-- /MarkdownTOC -->
+<h2>Usage</h2><pre class="prettyprint source lang-bash"><code>npm install --save web-stream-tools</code></pre><pre class="prettyprint source lang-js"><code>import stream from 'web-stream-tools';</code></pre><h2>Documentation</h2><p>See <a href="https://openpgpjs.org/web-stream-tools/global.html">the documentation</a> for a full list of functions. </p>
+<h2>Examples</h2><h3>Transforming a stream</h3><p>In this example we're encrypting a stream using an imaginary API which has <code>process</code> and <code>finish</code> methods.</p>
+<pre class="prettyprint source lang-js"><code>const encryptor = new Encryptor();
+const encrypted = stream.transform(input, function process(chunk) {
+  return encryptor.process(chunk);
+}, function finish() {
+  return encryptor.finish();
+});</code></pre><p>Both the <code>process</code> and <code>finish</code> functions:</p>
+<ul>
+<li>are optional (by default no data is written to the transformed stream)</li>
+<li>may be asynchronous</li>
+<li>may throw (in which case the error is forwarded to the transformed stream)</li>
+</ul>
+<p><code>input</code> can be a stream containing anything, or it can be a plain value (Uint8Array or String) in which case <code>transform()</code> will simply return <code>process(input)</code> and <code>finish()</code> concatenated together.</p>
+<h3>Transforming a stream in chunks of 1024 bytes</h3><p>In this example we're encrypting a stream using an imaginary API which has a <code>process</code> method that requires us to pass in chunks of size 1024 (unless it's the last chunk).</p>
+<pre class="prettyprint source lang-js"><code>const encrypted = stream.transformPair(input, async (readable, writable) => {
+  const reader = stream.getReader(readable);
+  const writer = stream.getWriter(writable);
+  try {
+    while (true) {
+      await writer.ready;
+      const chunk = await reader.readBytes(1024);
+        // The above will return 1024 bytes unless the stream closed before that, in which
+        // case it either returns fewer bytes or undefined if no data is available.
+      if (chunk === undefined) {
+        await writer.close();
+        break;
+      }
+      await writer.write(encryptor.process(chunk));
+    }
+  } catch(e) {
+    await writer.abort(e);
+  }
+});</code></pre><p>The above example may seem more complicated than necessary, but it correctly handles:</p>
+<ul>
+<li>Backpressure (if <code>encrypted</code> gets read slowly, <code>input</code> gets read slowly as well)</li>
+<li>Cancellation (if <code>encrypted</code> gets canceled, <code>input</code> gets cancelled as well)</li>
+<li>Erroring (if <code>input</code> errors, <code>encrypted</code> gets errored as well)</li>
+</ul>
+<p>Unlike <code>transform</code>, <code>transformPair</code> will always return a stream, even if <code>input</code> is not.</p>
+<h3>Parsing data on a stream which is expected to be in a specific format</h3><p>There are also helper functions for reading a specific number of bytes, or a single line, etc:</p>
+<pre class="prettyprint source lang-js"><code>stream.parse(input, reader => {
+  const byte = await reader.readByte(); // Single byte or undefined
+  const bytes = await reader.readBytes(n); // Uint8Array of up to n bytes, or undefined
+  const line = await reader.readLine(); // Returns String up to and including the first \n, or undefined. This function is specifically for a stream of Strings.
+  // There's also peekBytes() and unshift(), which you can use to look ahead in the stream.
+
+  const stream = reader.remainder(); // New stream containing the remainder of the original stream. Only available when using a Reader from stream.parse()
+});</code></pre><p>Most of the functions above are also available when getting a reader using <code>stream.getReader()</code> instead of <code>stream.parse()</code>.</p>
+<p>All of the functions above also work when reading a stream containing Strings instead of a Uint8Arrays, and will return Strings in that case.</p>
+<h3>Cloning and slicing streams</h3><p>There are also a few functions not for reading the stream, but for manipulating the stream for another function to read:</p>
+<pre class="prettyprint source lang-js"><code>stream.slice(input, begin, end); // Returns a stream pointing to part of the original stream, or a Uint8Array
+stream.clone(input); // Returns a copy of the stream so that two functions can read it. Note: this does *not* clone a Uint8Array, since this function is only meant for reading the same data twice.
+stream.passiveClone(input); // Also returns a copy of the stream, but doesn't return data immediately when you read from it, only returns data when you read from the original stream. This is meant for respecting backpressure.</code></pre><p>Note: these three functions do not work well with Node streams. Please convert Node streams to Web streams with <code>stream.nodeToWeb</code> first before using them.</p></article>
+    </section>
+
 
 
 
@@ -56,7 +127,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Jul 17 2018 15:12:32 GMT+0200 (DST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jul 25 2018 14:49:11 GMT+0200 (DST)
 </footer>
 
 <script> prettyPrint(); </script>
