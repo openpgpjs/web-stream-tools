@@ -13,6 +13,10 @@
     "url": "https://github.com/openpgpjs/streams/issues"
   },
   "homepage": "https://github.com/openpgpjs/streams#readme",
+  "dependencies": {
+    "@mattiasbuelens/web-streams-adapter": "0.1.0-alpha.3",
+    "web-streams-polyfill": "~2.0.6"
+  },
   "devDependencies": {
     "jsdoc": "~3.5.5"
   },
