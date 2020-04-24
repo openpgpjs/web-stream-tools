@@ -14,8 +14,8 @@
   },
   "homepage": "https://github.com/openpgpjs/streams#readme",
   "dependencies": {
-    "@mattiasbuelens/web-streams-adapter": "0.1.0-alpha.3",
-    "web-streams-polyfill": "~2.0.6"
+    "@mattiasbuelens/web-streams-adapter": "0.1.0-alpha.5",
+    "web-streams-polyfill": "~2.1.1"
   },
   "devDependencies": {
     "jsdoc": "~3.5.5"
