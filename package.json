@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Utility functions for WhatWG Streams",
   "main": "lib/streams.js",
+  "browser": {
+    "buffer": false,
+    "stream": false
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openpgpjs/streams.git"
