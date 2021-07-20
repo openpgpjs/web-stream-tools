@@ -5,7 +5,7 @@
   "main": "lib/streams.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openpgpjs/web-stream-tools.git"
+    "url": "https://github.com/openpgpjs/web-stream-tools.git"
   },
   "author": "Daniel Huigens <d.huigens@protonmail.com>",
   "license": "MIT",
@@ -18,9 +18,9 @@
     "web-streams-polyfill": "~3.0.3"
   },
   "devDependencies": {
-    "jsdoc": "~3.5.5"
+    "@openpgp/jsdoc": "^3.6.4"
   },
   "scripts": {
-    "docs": "jsdoc lib -d docs --readme README.md"
+    "docs": "jsdoc --configure .jsdocrc.js --destination docs --readme README.md lib"
   }
 }
