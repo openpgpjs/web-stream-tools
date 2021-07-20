@@ -21,6 +21,9 @@
     "@openpgp/jsdoc": "^3.6.4"
   },
   "scripts": {
-    "docs": "jsdoc --configure .jsdocrc.js --destination docs --readme README.md lib"
+    "docs": "jsdoc --configure .jsdocrc.js --destination docs --readme README.md lib",
+    "preversion": "rm -rf docs",
+    "version": "npm run docs && git add -A docs",
+    "postversion": "git push && git push --tags && npm publish"
   }
 }
