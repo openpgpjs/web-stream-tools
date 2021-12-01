@@ -18,11 +18,11 @@ This library contains both basic convenience functions such as `readToEnd`, `con
 ## Usage
 
 ```bash
-npm install --save web-stream-tools
+npm install --save @openpgp/web-stream-tools
 ```
 
 ```js
-import stream from 'web-stream-tools';
+import * as stream from '@openpgp/web-stream-tools';
 ```
 
 ## Documentation
