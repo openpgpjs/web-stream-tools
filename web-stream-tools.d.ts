@@ -28,7 +28,7 @@ interface WebStream<T extends Data> { // copied+simplified version of ReadableSt
   getReader(): ReadableStreamInternals.ReadableStreamDefaultReader<T>;
 }
 
-interface NodeStream<T extends Data> { // copied+simplified version of ReadableStream from @types/node/index.d.ts
+interface NodeStream<T extends Data> extends AsyncIterable<T> { // copied+simplified version of ReadableStream from @types/node/index.d.ts
   readable: boolean; pipe: Function; unpipe: Function; wrap: Function; setEncoding(encoding: string): this; pause(): this; resume(): this;
   isPaused(): boolean; unshift(chunk: string | Uint8Array): void;
   read(size?: number): T;

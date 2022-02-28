@@ -20,4 +20,3 @@ import { WebStream, NodeStream, readToEnd } from '../';
   console.error(e);
   process.exit(1);
 });
- 
