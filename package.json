@@ -27,7 +27,7 @@
   "scripts": {
     "test-type-definitions": "tsc test/typescript-definitions.ts && node --require esm test/typescript-definitions.js",
     "test": "npm run test-type-definitions",
-    "docs": "jsdoc --configure .jsdocrc.js --destination docs --readme README.md lib",
+    "docs": "jsdoc --configure .jsdocrc.js --destination docs --readme README.md lib && printf '%s' 'web-stream-tools.openpgpjs.org' > docs/CNAME",
     "preversion": "rm -rf docs",
     "version": "npm run docs && git add -A docs",
     "postversion": "git push && git push --tags && npm publish"
