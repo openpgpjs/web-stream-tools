@@ -27,7 +27,7 @@ import * as stream from '@openpgp/web-stream-tools';
 
 ## Documentation
 
-See [the documentation](https://openpgpjs.org/web-stream-tools/global.html) for a full list of functions. 
+See [the documentation](https://web-stream-tools.openpgpjs.org/) for a full list of functions.
 
 ## Examples
 
