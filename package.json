@@ -1,6 +1,6 @@
 {
   "name": "@openpgp/web-stream-tools",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Utility functions for WhatWG Streams",
   "main": "lib/streams.js",
   "types": "web-stream-tools.d.ts",
