@@ -14,10 +14,6 @@
     "url": "https://github.com/openpgpjs/web-stream-tools/issues"
   },
   "homepage": "https://github.com/openpgpjs/web-stream-tools#readme",
-  "dependencies": {
-    "@mattiasbuelens/web-streams-adapter": "~0.1.0",
-    "web-streams-polyfill": "~3.0.3"
-  },
   "devDependencies": {
     "@openpgp/jsdoc": "^3.6.4",
     "@types/node": "^17.0.18",
