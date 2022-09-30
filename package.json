@@ -4,6 +4,10 @@
   "description": "Utility functions for WhatWG Streams",
   "main": "lib/streams.js",
   "types": "web-stream-tools.d.ts",
+  "browser": {
+    "buffer": false,
+    "stream": false
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/openpgpjs/web-stream-tools.git"
