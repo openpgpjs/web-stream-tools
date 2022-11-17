@@ -3,7 +3,10 @@
   "version": "0.0.12",
   "description": "Utility functions for WhatWG Streams",
   "main": "lib/streams.js",
-  "types": "web-stream-tools.d.ts",
+  "typesVersions": {
+    ">=4.9": { "*": ["types/index.v4.9.d.ts"] },
+    ">=4.2": { "*": ["types/index.v4.2.d.ts"] }
+  },
   "browser": {
     "buffer": false,
     "stream": false
