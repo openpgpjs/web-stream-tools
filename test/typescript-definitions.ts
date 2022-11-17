@@ -11,6 +11,9 @@ import { WebStream, NodeStream, readToEnd } from '../';
   const webStream: WebStream<string> = new ReadableStream<Uint8Array>();
   assert(webStream instanceof WebReadableStream);
 
+  const anotherWebStream: WebStream<Uint8Array> = new ReadableStream<Uint8Array>();
+  assert(anotherWebStream instanceof WebReadableStream);
+
   await readToEnd(new Uint8Array([1])) as Uint8Array;
   await readToEnd(new Uint8Array([1]), _ => _) as Uint8Array[];
 

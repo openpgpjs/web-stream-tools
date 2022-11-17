@@ -4,18 +4,28 @@
 
 export namespace ReadableStreamInternals {
   // copied+simplified version of ReadableStream from lib.dom.d.ts, needed to enforce type checks in WebStream below
-  interface ReadableStreamDefaultReadDoneResult {
+  interface ReadableStreamReadDoneResult<T> {
     done: true;
-    value?: undefined;
+    value?: T;
   }
-  interface ReadableStreamDefaultReadValueResult<T> {
+  interface ReadableStreamReadValueResult<T> {
     done: false;
     value: T;
   }
-  interface ReadableStreamDefaultReader<R = any> {
+  interface ReadableStreamGenericReader {
     readonly closed: Promise<undefined>;
     cancel(reason?: any): Promise<void>;
-    read(): Promise<ReadableStreamDefaultReadValueResult<R> | ReadableStreamDefaultReadDoneResult>;
+  }
+
+  type ReadableStreamReadResult<T> = ReadableStreamReadValueResult<T> | ReadableStreamReadDoneResult<T>;
+
+  interface ReadableStreamDefaultReader<R = any> extends ReadableStreamGenericReader {
+    read(): Promise<ReadableStreamReadResult<R>>;
+    releaseLock(): void;
+  }
+
+  interface ReadableStreamBYOBReader extends ReadableStreamGenericReader {
+    read<T extends ArrayBufferView>(view: T): Promise<ReadableStreamReadResult<T>>;
     releaseLock(): void;
   }
 }
@@ -26,6 +36,8 @@ interface WebStream<T extends Data> { // copied+simplified version of ReadableSt
   readonly locked: boolean; pipeThrough: Function; pipeTo: Function; tee: Function;
   cancel(reason?: any): Promise<void>;
   getReader(): ReadableStreamInternals.ReadableStreamDefaultReader<T>;
+  getReader(options: { mode: "byob" }): ReadableStreamInternals.ReadableStreamBYOBReader;
+  getReader(options?: { mode?: "byob" }): ReadableStreamInternals.ReadableStreamDefaultReader<T> | ReadableStreamInternals.ReadableStreamBYOBReader;
 }
 
 interface NodeStream<T extends Data> extends AsyncIterable<T> { // copied+simplified version of ReadableStream from @types/node/index.d.ts
