@@ -28,6 +28,14 @@
     "typescript": "^4.9.3",
     "web-streams-polyfill": "^3.2.1"
   },
+  "peerDependencies": { 
+    "typescript": ">=4.2"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
   "scripts": {
     "test-type-definitions": "tsc test/typescript-definitions.ts && node --require esm test/typescript-definitions.js",
     "test": "npm run test-type-definitions",
