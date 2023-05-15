@@ -1,10 +1,10 @@
-import * as assert from 'assert';
+import assert from 'assert';
 import { Readable as NodeReadableStream } from 'stream';
 import { ReadableStream as WebReadableStream } from 'web-streams-polyfill';
-import { WebStream, NodeStream, readToEnd } from '../';
+import type { WebStream, NodeStream } from '../lib/index.js';
+import { readToEnd } from '../lib/index.js';
 
 (async () => {
- 
   const nodeStream: NodeStream<string> = new NodeReadableStream();
   assert(nodeStream instanceof NodeReadableStream);
   // @ts-expect-error detect type parameter mismatch

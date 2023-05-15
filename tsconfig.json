@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "target": "es2021",
+        "moduleResolution": "node",
+        "module": "esnext",
+        "noUnusedLocals": true,
+        "esModuleInterop": true,
+        "allowJs": true
+    },
+    "exclude": [
+        "node_modules",
+    ],
+}

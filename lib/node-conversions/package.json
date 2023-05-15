@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "browser": {
+    "./node.js": "./browser-fallback.js"
+  },
+  "exports": {
+    ".": "index.js"
+  }
+}

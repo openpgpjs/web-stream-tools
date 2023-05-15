@@ -7,15 +7,13 @@ on:
     branches: [main]
 
 jobs:
-  lint:
+  type-definitions:
     name: Test type definitions
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '15'
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
     - run: npm ci
     - run: npm run test-type-definitions
