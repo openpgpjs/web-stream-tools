@@ -3,6 +3,8 @@ import { Readable as NodeReadableStream } from 'stream';
 import { ReadableStream as WebReadableStream } from 'web-streams-polyfill';
 import type { WebStream, NodeStream } from '../lib/index.js';
 import { readToEnd } from '../lib/index.js';
+// @ts-ignore missing defs
+import { ArrayStream, isArrayStream } from '../lib/index.js';
 
 (async () => {
   const nodeStream: NodeStream<string> = new NodeReadableStream();
@@ -16,6 +18,8 @@ import { readToEnd } from '../lib/index.js';
 
   await readToEnd(new Uint8Array([1])) as Uint8Array;
   await readToEnd(new Uint8Array([1]), _ => _) as Uint8Array[];
+
+  assert(isArrayStream(new ArrayStream())); // ensure Array is actually extended in e.g. es5
 
   console.log('TypeScript definitions are correct');
 })().catch(e => {
