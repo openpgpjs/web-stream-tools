@@ -50,6 +50,7 @@
   "scripts": {
     "test-type-definitions": "ts-node --esm test/typescript-definitions.ts",
     "test-browser": "karma start karma.conf.cjs",
+    "test-node": "mocha ./test/node.test.js",
     "lint": "eslint lib test",
     "docs": "jsdoc --configure .jsdocrc.cjs --destination docs --readme README.md lib && printf '%s' 'web-stream-tools.openpgpjs.org' > docs/CNAME",
     "preversion": "rm -rf docs",

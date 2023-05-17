@@ -1,4 +1,4 @@
-const { firefox, chromium, webkit } = require('playwright');
+const { chromium } = require('playwright');
 
 process.env.CHROME_BIN = chromium.executablePath();
 
