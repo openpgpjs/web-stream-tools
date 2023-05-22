@@ -2,11 +2,14 @@
     "compilerOptions": {
         "strict": true,
         "target": "es2021",
-        "moduleResolution": "node",
+        "moduleResolution": "node16",
         "module": "esnext",
         "noUnusedLocals": true,
         "esModuleInterop": true, // for 'assert'
-        "allowJs": true
+        "allowJs": true,
+        "paths": {
+            "@openpgp/web-stream-tools": "."
+        }
     },
     "exclude": [
         "node_modules",

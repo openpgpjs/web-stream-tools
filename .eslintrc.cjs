@@ -47,7 +47,7 @@ module.exports = {
       "implicit-arrow-linebreak": "off",
       "no-underscore-dangle": "off",
       "import/no-unresolved": ["error", {
-          "ignore": ["^react$", "ttag", ".data"]
+          "ignore": ["@openpgp/web-stream-tools"]
       }],
       "import/prefer-default-export": "off",
       "import/no-extraneous-dependencies": "off",

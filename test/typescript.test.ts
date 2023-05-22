@@ -1,10 +1,10 @@
 import assert from 'assert';
 import { Readable as NodeReadableStream } from 'stream';
 import { ReadableStream as WebReadableStream } from 'web-streams-polyfill';
-import type { WebStream, NodeStream } from '../lib/index.js';
-import { readToEnd } from '../lib/index.js';
+import type { WebStream, NodeStream } from '@openpgp/web-stream-tools';
+import { readToEnd } from '@openpgp/web-stream-tools';
 // @ts-ignore missing defs
-import { ArrayStream, isArrayStream } from '../lib/index.js';
+import { ArrayStream, isArrayStream } from '@openpgp/web-stream-tools';
 
 (async () => {
   const nodeStream: NodeStream<string> = new NodeReadableStream();

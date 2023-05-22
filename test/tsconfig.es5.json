@@ -1,12 +1,7 @@
 {
+    "extends": "../tsconfig.json",
     "compilerOptions": {
-        "strict": true,
-        "target": "es5",
-        "moduleResolution": "node",
-        "module": "esnext",
-        "noUnusedLocals": true,
-        "esModuleInterop": true, // for 'assert'
-        "allowJs": true
+        "target": "es5"
     },
     "exclude": [
         "node_modules",
