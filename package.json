@@ -3,6 +3,10 @@
   "version": "0.0.13",
   "description": "Utility functions for WhatWG Streams",
   "type": "module",
+  "files": [
+    "lib/",
+    "tsconfig.json"
+  ],
   "exports": {
     "types": "./lib/index.d.ts",
     "import": "./lib/index.js"
