@@ -2,19 +2,13 @@
   "name": "@openpgp/web-stream-tools",
   "version": "0.0.13",
   "description": "Utility functions for WhatWG Streams",
-  "main": "lib/streams.js",
-  "typesVersions": {
-    ">=4.9": {
-      "*": [
-        "types/index.v4.9.d.ts"
-      ]
-    },
-    ">=4.2": {
-      "*": [
-        "types/index.v4.2.d.ts"
-      ]
-    }
+  "type": "module",
+  "exports": {
+    "types": "./lib/index.d.ts",
+    "import": "./lib/index.js"
   },
+  "types": "./lib/index.d.ts",
+  "main": "./lib/index.js",
   "browser": {
     "buffer": false,
     "stream": false
@@ -30,9 +24,20 @@
   },
   "homepage": "https://github.com/openpgpjs/web-stream-tools#readme",
   "devDependencies": {
-    "@openpgp/jsdoc": "^3.6.4",
+    "@openpgp/jsdoc": "^3.6.11",
     "@types/node": "^18.11.9",
-    "esm": "^3.2.25",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "chai": "^4.3.7",
+    "eslint": "^8.40.0",
+    "eslint-plugin-import": "^2.27.5",
+    "karma-chrome-launcher": "^3.2.0",
+    "karma-mocha": "^2.0.1",
+    "karma-mocha-reporter": "^2.2.5",
+    "karma-webpack": "^5.0.0",
+    "mocha": "^10.2.0",
+    "playwright": "^1.33.0",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
     "web-streams-polyfill": "^3.2.1"
   },
@@ -45,9 +50,11 @@
     }
   },
   "scripts": {
-    "test-type-definitions": "tsc test/typescript-definitions.ts && node --require esm test/typescript-definitions.js",
-    "test": "npm run test-type-definitions",
-    "docs": "jsdoc --configure .jsdocrc.js --destination docs --readme README.md lib && printf '%s' 'web-stream-tools.openpgpjs.org' > docs/CNAME",
+    "test-type-definitions": "ts-node --esm test/typescript.test.ts && ts-node --esm --project test/tsconfig.es5.json test/typescript.test.ts",
+    "test-browser": "karma start karma.conf.cjs",
+    "test-node": "mocha ./test/node.test.js",
+    "lint": "eslint lib test",
+    "docs": "jsdoc --configure .jsdocrc.cjs --destination docs --readme README.md lib && printf '%s' 'web-stream-tools.openpgpjs.org' > docs/CNAME",
     "preversion": "rm -rf docs",
     "version": "npm run docs && git add -A docs",
     "postversion": "git push && git push --tags && npm publish"

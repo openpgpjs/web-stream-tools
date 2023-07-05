@@ -1,10 +1,12 @@
-import * as assert from 'assert';
+import assert from 'assert';
 import { Readable as NodeReadableStream } from 'stream';
 import { ReadableStream as WebReadableStream } from 'web-streams-polyfill';
-import { WebStream, NodeStream, readToEnd } from '../';
+import type { WebStream, NodeStream } from '@openpgp/web-stream-tools';
+import { readToEnd } from '@openpgp/web-stream-tools';
+// @ts-ignore missing defs
+import { ArrayStream, isArrayStream } from '@openpgp/web-stream-tools';
 
 (async () => {
- 
   const nodeStream: NodeStream<string> = new NodeReadableStream();
   assert(nodeStream instanceof NodeReadableStream);
   // @ts-expect-error detect type parameter mismatch
@@ -16,6 +18,8 @@ import { WebStream, NodeStream, readToEnd } from '../';
 
   await readToEnd(new Uint8Array([1])) as Uint8Array;
   await readToEnd(new Uint8Array([1]), _ => _) as Uint8Array[];
+
+  assert(isArrayStream(new ArrayStream())); // ensure Array is actually extended in e.g. es5
 
   console.log('TypeScript definitions are correct');
 })().catch(e => {
