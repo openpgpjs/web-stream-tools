@@ -1,12 +1,12 @@
-const { expect } = require('chai');
-const {
+import { expect } from 'chai';
+import {
   pipeline,
-  Readable: NodeReadable,
-  PassThrough: NodePassThrough,
-} = require('stream');
-const { promisify } = require('util');
+  Readable as NodeReadable,
+  PassThrough as NodePassThrough,
+} from 'stream' ;
+import { promisify } from 'util';
 
-const { nodeToWeb, webToNode } = require('../../lib/streams');
+import { nodeToWeb, webToNode } from '../../lib/streams';
 
 async function readStreamToString(readable) {
   const chunks = [];
