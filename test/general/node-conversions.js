@@ -6,7 +6,7 @@ import {
 } from 'stream' ;
 import { promisify } from 'util';
 
-import { nodeToWeb, webToNode } from '../../lib/streams';
+import { nodeToWeb, webToNode, loadStreamsPonyfill } from '../../lib/streams';
 
 async function readStreamToString(readable) {
   const chunks = [];
@@ -20,6 +20,8 @@ async function readStreamToString(readable) {
 
 describe('Node Conversions', function () {
   let input;
+
+  before(async () => loadStreamsPonyfill());
 
   beforeEach(function () {
     input = webToNode(nodeToWeb(NodeReadable.from(['a', 'b', 'c'])));
