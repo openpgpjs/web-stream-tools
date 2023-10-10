@@ -5,9 +5,9 @@ name: Test on Node.js
 
 on:
   push:
-    branches: [main]
+    branches: [openpgpjs_v5]
   pull_request:
-    branches: [main]
+    branches: [openpgpjs_v5]
 
 jobs:
   build:

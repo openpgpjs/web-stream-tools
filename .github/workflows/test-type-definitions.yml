@@ -2,9 +2,9 @@ name: Types
 
 on:
   push:
-    branches: [main]
+    branches: [main, openpgpjs_v5]
   pull_request:
-    branches: [main]
+    branches: [main, openpgpjs_v5]
 
 jobs:
   lint:
