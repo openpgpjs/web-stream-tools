@@ -20,13 +20,15 @@
   },
   "devDependencies": {
     "@openpgp/jsdoc": "^3.6.4",
-    "@types/node": "^17.0.18",
+    "@types/node": "^18.11.9",
+    "chai": "^4.3.6",
     "esm": "^3.2.25",
-    "typescript": "^4.5.5"
+    "mocha": "^8.4.0",
+    "typescript": "^4.9.3"
   },
   "scripts": {
     "test-type-definitions": "tsc test/typescript-definitions.ts && node --require esm test/typescript-definitions.js",
-    "test": "npm run test-type-definitions",
+    "test": "mocha --require esm test/general",
     "docs": "jsdoc --configure .jsdocrc.js --destination docs --readme README.md lib && printf '%s' 'web-stream-tools.openpgpjs.org' > docs/CNAME",
     "preversion": "rm -rf docs",
     "version": "npm run docs && git add -A docs",
