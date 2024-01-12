@@ -17,6 +17,9 @@
     "buffer": false,
     "stream": false
   },
+  "engines": {
+    "node": ">= 16.5.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/openpgpjs/web-stream-tools.git"

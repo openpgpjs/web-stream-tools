@@ -4,6 +4,6 @@
     "./node.js": "./browser-fallback.js"
   },
   "exports": {
-    ".": "index.js"
+    ".": "./index.js"
   }
 }
