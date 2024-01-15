@@ -41,7 +41,7 @@
     "karma-webpack": "^5.0.0",
     "mocha": "^10.2.0",
     "playwright": "^1.33.0",
-    "ts-node": "^10.9.1",
+    "tsx": "^4.7.0",
     "typescript": "^5.0.4",
     "web-streams-polyfill": "^3.2.1"
   },
@@ -54,7 +54,7 @@
     }
   },
   "scripts": {
-    "test-type-definitions": "ts-node --esm test/typescript.test.ts && ts-node --esm --project test/tsconfig.es5.json test/typescript.test.ts",
+    "test-type-definitions": "tsx test/typescript.test.ts && tsx --tsconfig test/tsconfig.es5.json test/typescript.test.ts",
     "test-browser": "karma start karma.conf.cjs",
     "test-node": "mocha ./test/node.test.js",
     "lint": "eslint lib test",
