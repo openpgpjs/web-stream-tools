@@ -22,7 +22,7 @@ module.exports = function(config) {
         ],
 
         // list of files / patterns to load in the browser
-        files: [{ pattern: 'test/browser.test.js', watched: false }],
+        files: [{ pattern: 'test/{browser,common}.test.js', watched: false }],
 
         // list of files / patterns to exclude
         exclude: [],
@@ -30,7 +30,7 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://www.npmjs.com/search?q=keywords:karma-preprocessor
         preprocessors: {
-            'test/browser.test.js': 'webpack'
+            'test/{browser,common}.test.js': 'webpack'
         },
 
         webpack: {},

@@ -1,10 +1,16 @@
 import { expect } from 'chai';
-import { toStream, readToEnd } from '../lib/index.js';
+import { toStream, readToEnd } from '@openpgp/web-stream-tools';
 
 describe('Browser integration tests', () => {
-  it('toStream/readToEnd', async () => {
+  it('accepts readable stream', async () => {
     const input = 'chunk';
-    const streamedData = toStream('chunk');
+    const stream = new ReadableStream({
+      start(controller) {
+        controller.enqueue(input);
+        controller.close();
+      }
+    });
+    const streamedData = toStream(stream);
     expect(await readToEnd(streamedData)).to.equal(input);
-  })
+  });
 })
