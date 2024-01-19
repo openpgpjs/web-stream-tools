@@ -28,6 +28,8 @@
   "homepage": "https://github.com/openpgpjs/web-stream-tools#readme",
   "devDependencies": {
     "@openpgp/jsdoc": "^3.6.11",
+    "@types/chai": "^4.3.11",
+    "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.4",
     "@typescript-eslint/eslint-plugin": "^5.59.6",
     "@typescript-eslint/parser": "^5.59.6",
@@ -40,9 +42,10 @@
     "karma-webpack": "^5.0.0",
     "mocha": "^10.2.0",
     "playwright": "^1.33.0",
+    "ts-loader": "^9.5.1",
     "tsx": "^4.7.0",
     "typescript": "^5.0.4",
-    "web-streams-polyfill": "^3.2.1"
+    "web-streams-polyfill": "^3.3.2"
   },
   "peerDependencies": {
     "typescript": ">=4.2"
@@ -55,7 +58,7 @@
   "scripts": {
     "test-type-definitions": "tsx test/typescript.test.ts && tsx --tsconfig test/tsconfig.es5.json test/typescript.test.ts",
     "test-browser": "karma start karma.conf.cjs",
-    "test-node": "mocha ./test/node.test.js ./test/common.test.js",
+    "test-node": "NODE_OPTIONS='--import tsx' mocha ./test/node.test.ts ./test/common.test.ts",
     "lint": "eslint lib test",
     "docs": "jsdoc --configure .jsdocrc.cjs --destination docs --readme README.md lib && printf '%s' 'web-stream-tools.openpgpjs.org' > docs/CNAME",
     "preversion": "rm -rf docs",
