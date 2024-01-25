@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { Readable as NodeNativeReadableStream } from 'node:stream';
 import { ReadableStream as NodeWebReadableStream } from 'node:stream/web';
 import { toStream, readToEnd } from '@openpgp/web-stream-tools';
-import { ReadableStream as PolyfilledReadableStream } from 'web-streams-polyfill';
 
 describe('Node integration tests', () => {
   it('throws on node native stream', async () => {
@@ -36,6 +35,8 @@ describe('Node integration tests', () => {
   });
 
   it('polyfilled web stream cannot be converted into node native stream', async () => {
+    const { ReadableStream: PolyfilledReadableStream } = await import ('web-streams-polyfill');
+
     // this test is just to keep track that this behaviour is expected
     const input = 'chunk';
     const stream = new PolyfilledReadableStream({
