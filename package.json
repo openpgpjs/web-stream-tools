@@ -41,7 +41,7 @@
     "mocha": "^10.2.0",
     "playwright": "^1.33.0",
     "tsx": "^4.7.0",
-    "typescript": "^5.0.4",
+    "typescript": "^5.3.3",
     "web-streams-polyfill": "^3.2.1"
   },
   "peerDependencies": {
