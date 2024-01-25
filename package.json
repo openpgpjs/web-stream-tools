@@ -43,6 +43,8 @@
     "mocha": "^10.2.0",
     "playwright": "^1.33.0",
     "ts-loader": "^9.5.1",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.2",
     "tsx": "^4.7.0",
     "typescript": "^5.0.4",
     "web-streams-polyfill": "^3.3.2"
@@ -58,7 +60,7 @@
   "scripts": {
     "test-type-definitions": "tsx test/typescript.test.ts && tsx --tsconfig test/tsconfig.es5.json test/typescript.test.ts",
     "test-browser": "karma start karma.conf.cjs",
-    "test-node": "NODE_OPTIONS='--import tsx' mocha ./test/node.test.ts ./test/common.test.ts",
+    "test-node": "ts-mocha -n loader=ts-node/esm ./test/node.test.ts ./test/common.test.ts",
     "lint": "eslint lib test",
     "docs": "jsdoc --configure .jsdocrc.cjs --destination docs --readme README.md lib && printf '%s' 'web-stream-tools.openpgpjs.org' > docs/CNAME",
     "preversion": "rm -rf docs",
