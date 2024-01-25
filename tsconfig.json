@@ -3,7 +3,7 @@
         "strict": true,
         "target": "es2021",
         "moduleResolution": "node16",
-        "module": "esnext",
+        "module": "node16",
         "noUnusedLocals": true,
         "esModuleInterop": true, // for 'assert'
         "allowJs": true,

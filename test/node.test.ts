@@ -7,12 +7,13 @@ import { ReadableStream as PolyfilledReadableStream } from 'web-streams-polyfill
 describe('Node integration tests', () => {
   it('throws on node native stream', async () => {
     const input = new NodeNativeReadableStream();
+    // @ts-expect-error `toStream` does not accept a native node stream
     expect(() => toStream(input)).to.throw(/Native Node streams are no longer supported/);
   });
 
   it('accepts node web stream', async () => {
     const input = 'chunk';
-    const stream = new NodeWebReadableStream({
+    const stream = new NodeWebReadableStream<string>({
       start(controller) {
         controller.enqueue(input);
         controller.close();
@@ -24,7 +25,7 @@ describe('Node integration tests', () => {
 
   it('returned node web stream can be converted into node native stream', async () => {
     const input = 'chunk';
-    const stream = new NodeWebReadableStream({
+    const stream = new NodeWebReadableStream<string>({
       start(controller) {
         controller.enqueue(input);
         controller.close();
@@ -44,6 +45,7 @@ describe('Node integration tests', () => {
       }
     });
     const streamedData = toStream(stream);
+    // @ts-expect-error `fromWeb` does not accept the polyfilled stream
     expect(() => NodeNativeReadableStream.fromWeb(streamedData)).to.throw(/must be an instance of ReadableStream/);
   });
 });

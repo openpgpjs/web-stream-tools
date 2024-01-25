@@ -1,10 +1,10 @@
 import { expect } from 'chai';
-import { toStream, readToEnd } from '@openpgp/web-stream-tools';
+import { toStream, readToEnd, WebStream } from '@openpgp/web-stream-tools';
 
 describe('Browser integration tests', () => {
   it('accepts readable stream', async () => {
     const input = 'chunk';
-    const stream = new ReadableStream({
+    const stream: WebStream<string> = new ReadableStream({
       start(controller) {
         controller.enqueue(input);
         controller.close();
