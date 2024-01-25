@@ -44,12 +44,16 @@
 
     <section>
         <article><h1 id="web-stream-tools">Web Stream Tools</h1>
-<p>This library contains both basic convenience functions such as <code>readToEnd</code>, <code>concat</code>, <code>slice</code>, <code>clone</code>, <code>webToNode</code> and <code>nodeToWeb</code>, and more complex functions for transforming and parsing streams. Examples of the latter can be found below.</p>
+<p>This library contains both basic convenience functions such as <code>readToEnd</code>, <code>concat</code>, <code>slice</code>, <code>clone</code>, and more complex functions for transforming and parsing streams. Examples of the latter can be found below.</p>
 <h2 id="table-of-contents">Table of Contents</h2>
 <!-- MarkdownTOC autolink="true" -->
 <ul>
 <li><a href="#usage">Usage</a></li>
-<li><a href="#documentation">Documentation</a></li>
+<li><a href="#documentation">Documentation</a>
+<ul>
+<li><a href="#stream-support-in-nodejs">Stream support in Node.js</a></li>
+</ul>
+</li>
 <li><a href="#examples">Examples</a>
 <ul>
 <li><a href="#transforming-a-stream">Transforming a stream</a></li>
@@ -67,6 +71,8 @@
 </code></pre>
 <h2 id="documentation">Documentation</h2>
 <p>See <a href="https://web-stream-tools.openpgpjs.org/">the documentation</a> for a full list of functions.</p>
+<h3 id="stream-support-in-node.js">Stream support in Node.js</h3>
+<p>From v0.1, <strong>the library no longer supports native Node Readable streams in input</strong>, and instead expects <a href="https://nodejs.org/api/webstreams.html#class-readablestream">Node's WebStreams</a>. <a href="https://nodejs.org/api/stream.html#streamreadabletowebstreamreadable-options">Node v17+ includes utilities to convert from and to Web Streams</a>.</p>
 <h2 id="examples">Examples</h2>
 <h3 id="transforming-a-stream">Transforming a stream</h3>
 <p>In this example we're encrypting a stream using an imaginary API which has <code>process</code> and <code>finish</code> methods.</p>
@@ -131,8 +137,7 @@ const encrypted = stream.transform(input, function process(chunk) {
 <pre class="prettyprint source lang-js"><code>stream.slice(input, begin, end); // Returns a stream pointing to part of the original stream, or a Uint8Array
 stream.clone(input); // Returns a copy of the stream so that two functions can read it. Note: this does *not* clone a Uint8Array, since this function is only meant for reading the same data twice.
 stream.passiveClone(input); // Also returns a copy of the stream, but doesn't return data immediately when you read from it, only returns data when you read from the original stream. This is meant for respecting backpressure.
-</code></pre>
-<p>Note: these three functions do not work well with Node streams. Please convert Node streams to Web streams with <code>stream.nodeToWeb</code> first before using them.</p></article>
+</code></pre></article>
     </section>
 
 
@@ -143,7 +148,7 @@ stream.passiveClone(input); // Also returns a copy of the stream, but doesn't re
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Functions</h3><ul><li><a href="global.html#cancel">cancel</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#concat">concat</a></li><li><a href="global.html#concatArrayStream">concatArrayStream</a></li><li><a href="global.html#concatStream">concatStream</a></li><li><a href="global.html#concatUint8Array">concatUint8Array</a></li><li><a href="global.html#fromAsync">fromAsync</a></li><li><a href="global.html#getReader">getReader</a></li><li><a href="global.html#getWriter">getWriter</a></li><li><a href="global.html#isArrayStream">isArrayStream</a></li><li><a href="global.html#isStream">isStream</a></li><li><a href="global.html#isUint8Array">isUint8Array</a></li><li><a href="global.html#overwrite">overwrite</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#passiveClone">passiveClone</a></li><li><a href="global.html#pipe">pipe</a></li><li><a href="global.html#readToEnd">readToEnd</a></li><li><a href="global.html#slice">slice</a></li><li><a href="global.html#tee">tee</a></li><li><a href="global.html#toArrayStream">toArrayStream</a></li><li><a href="global.html#toStream">toStream</a></li><li><a href="global.html#transform">transform</a></li><li><a href="global.html#transformPair">transformPair</a></li><li><a href="global.html#transformRaw">transformRaw</a></li><li><a href="global.html#transformWithCancel">transformWithCancel</a></li></ul><h3>Classes</h3><ul><li><a href="Reader.html">Reader</a></li><li><a href="Writer.html">Writer</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Functions</h3><ul><li><a href="global.html#cancel">cancel</a></li><li><a href="global.html#clone">clone</a></li><li><a href="global.html#concat">concat</a></li><li><a href="global.html#concatArrayStream">concatArrayStream</a></li><li><a href="global.html#concatStream">concatStream</a></li><li><a href="global.html#concatUint8Array">concatUint8Array</a></li><li><a href="global.html#externalBuffer">externalBuffer</a></li><li><a href="global.html#fromAsync">fromAsync</a></li><li><a href="global.html#getReader">getReader</a></li><li><a href="global.html#getWriter">getWriter</a></li><li><a href="global.html#isArrayStream">isArrayStream</a></li><li><a href="global.html#isStream">isStream</a></li><li><a href="global.html#isUint8Array">isUint8Array</a></li><li><a href="global.html#overwrite">overwrite</a></li><li><a href="global.html#parse">parse</a></li><li><a href="global.html#passiveClone">passiveClone</a></li><li><a href="global.html#pipe">pipe</a></li><li><a href="global.html#readToEnd">readToEnd</a></li><li><a href="global.html#slice">slice</a></li><li><a href="global.html#tee">tee</a></li><li><a href="global.html#toArrayStream">toArrayStream</a></li><li><a href="global.html#toStream">toStream</a></li><li><a href="global.html#transform">transform</a></li><li><a href="global.html#transformPair">transformPair</a></li><li><a href="global.html#transformRaw">transformRaw</a></li><li><a href="global.html#transformWithCancel">transformWithCancel</a></li></ul><h3>Classes</h3><ul><li><a href="Reader.html">Reader</a></li><li><a href="Writer.html">Writer</a></li></ul>
 </nav>
 
 <br class="clear">
