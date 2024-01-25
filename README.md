@@ -1,12 +1,13 @@
 # Web Stream Tools
 
-This library contains both basic convenience functions such as `readToEnd`, `concat`, `slice`, `clone`, `webToNode` and `nodeToWeb`, and more complex functions for transforming and parsing streams. Examples of the latter can be found below.
+This library contains both basic convenience functions such as `readToEnd`, `concat`, `slice`, `clone`, and more complex functions for transforming and parsing streams. Examples of the latter can be found below.
 
 ## Table of Contents
 <!-- MarkdownTOC autolink="true" -->
 
 - [Usage](#usage)
 - [Documentation](#documentation)
+  - [Stream support in Node.js](#stream-support-in-nodejs)
 - [Examples](#examples)
   - [Transforming a stream](#transforming-a-stream)
   - [Transforming a stream in chunks of 1024 bytes](#transforming-a-stream-in-chunks-of-1024-bytes)
@@ -28,6 +29,10 @@ import * as stream from '@openpgp/web-stream-tools';
 ## Documentation
 
 See [the documentation](https://web-stream-tools.openpgpjs.org/) for a full list of functions.
+
+### Stream support in Node.js
+
+From v0.1, **the library no longer supports native Node Readable streams in input**, and instead expects [Node's WebStreams](https://nodejs.org/api/webstreams.html#class-readablestream). [Node v17+ includes utilities to convert from and to Web Streams](https://nodejs.org/api/stream.html#streamreadabletowebstreamreadable-options).
 
 ## Examples
 
@@ -115,4 +120,3 @@ stream.clone(input); // Returns a copy of the stream so that two functions can r
 stream.passiveClone(input); // Also returns a copy of the stream, but doesn't return data immediately when you read from it, only returns data when you read from the original stream. This is meant for respecting backpressure.
 ```
 
-Note: these three functions do not work well with Node streams. Please convert Node streams to Web streams with `stream.nodeToWeb` first before using them.
