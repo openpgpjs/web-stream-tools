@@ -37,16 +37,16 @@ describe('Node integration tests', () => {
   it('polyfilled web stream cannot be converted into node native stream', async () => {
     const { ReadableStream: PolyfilledReadableStream } = await import ('web-streams-polyfill');
 
-    // this test is just to keep track that this behaviour is expected
+    // this test is just to keep track that this behaviour is expected: it does not cause a TS error, but a runtime one
     const input = 'chunk';
-    const stream = new PolyfilledReadableStream({
+    const stream: NodeWebReadableStream<string> = new PolyfilledReadableStream<string>({
       start(controller) {
         controller.enqueue(input);
         controller.close();
       }
     });
     const streamedData = toStream(stream);
-    // @ts-expect-error `fromWeb` does not accept the polyfilled stream
+    // `fromWeb` does not accept the polyfilled stream
     expect(() => NodeNativeReadableStream.fromWeb(streamedData)).to.throw(/must be an instance of ReadableStream/);
   });
 });

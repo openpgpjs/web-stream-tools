@@ -33,10 +33,10 @@ const newEmptyWebStream = <T extends Data>(): WebStream<T> => new WebReadableStr
   const expectedWebStreamButActualNodeStream: WebStream<string> = toStream(nodeWebStream);
   assert(expectedWebStreamButActualNodeStream instanceof NodeWebReadableStream);
   const newStringStream: Stream<string> = toStream('chunk');
-  assert(newStringStream instanceof WebReadableStream); // ReadableStream is polyfilled
+  assert(newStringStream instanceof NodeWebReadableStream);
   // @ts-expect-error detect type parameter mismatch
   const anotherStringStream: Stream<Uint8Array> = toStream('chunk');
-  assert(anotherStringStream instanceof WebReadableStream);  // ReadableStream is polyfilled
+  assert(anotherStringStream instanceof NodeWebReadableStream);
 
   assert(isArrayStream(new ArrayStream())) ; // ensure Array is actually extended in e.g. es5
 
