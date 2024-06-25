@@ -14,7 +14,7 @@
   "types": "./lib/index.d.ts",
   "main": "./lib/index.js",
   "engines": {
-    "node": ">= 16.5.0"
+    "node": ">= 18.0.0"
   },
   "repository": {
     "type": "git",
