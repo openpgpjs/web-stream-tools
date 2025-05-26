@@ -13,6 +13,8 @@ export function readToEnd<T extends Data, JoinFn extends (chunks: T[]) => any = 
   join?: JoinFn
 ): Promise<ReturnType<JoinFn>>;
 
+export function consumeToEnd<T extends Data>(input: MaybeStream<T>): Promise<undefined>;
+
 export function toStream<T extends Data, InputType extends MaybeStream<T>>(
   input: InputType
 ): InputType extends T ? Stream<InputType> : InputType;
