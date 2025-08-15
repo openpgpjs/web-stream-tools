@@ -58,7 +58,8 @@
     }
   },
   "scripts": {
-    "test-type-definitions": "tsx test/typescript.test.ts && tsx --tsconfig test/tsconfig.es5.json test/typescript.test.ts",
+    "test-type-definitions": "tsc --project test/tsconfig.test.json && tsx test/typescript.test.ts",
+    "test-type-definitions-es5": "tsc --project test/tsconfig.es5.json && tsx --tsconfig test/tsconfig.es5.json test/typescript.test.ts",
     "test-browser": "karma start karma.conf.cjs",
     "test-node": "ts-mocha -n loader=ts-node/esm ./test/node.test.ts ./test/common.test.ts",
     "lint": "eslint lib test",
