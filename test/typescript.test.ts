@@ -1,22 +1,24 @@
 import assert from 'assert';
 import { Readable as NodeNativeReadableStream } from 'stream';
 import { ReadableStream as NodeWebReadableStream } from 'node:stream/web';
-import { ReadableStream as WebReadableStream } from 'web-streams-polyfill';
+import { ReadableStream as PonyfilledWebReadableStream } from 'web-streams-polyfill';
 import { WebStream, NodeWebStream, Stream, toStream, Data } from '@openpgp/web-stream-tools';
 import { readToEnd } from '@openpgp/web-stream-tools';
 // @ts-ignore missing defs
 import { ArrayStream, isArrayStream } from '@openpgp/web-stream-tools';
 
-const newEmptyWebStream = <T extends Data>(): WebStream<T> => new WebReadableStream<T>({ start(ctrl) { ctrl.close() } });
+const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
+  new PonyfilledWebReadableStream<T>({ start(ctrl) { ctrl.close() } })
+);
 
 (async () => {
-  const webStream: WebStream<string> = new WebReadableStream<string>();
-  assert(webStream instanceof WebReadableStream);
+  const webStream: WebStream<string> = new PonyfilledWebReadableStream<string>();
+  assert(webStream instanceof PonyfilledWebReadableStream);
   const nodeWebStream: NodeWebStream<string> = NodeNativeReadableStream.toWeb(new NodeNativeReadableStream());
   assert(nodeWebStream instanceof NodeWebReadableStream);
   // @ts-expect-error detect type parameter mismatch
-  const anotherWebStream: WebStream<string> = new WebReadableStream<Uint8Array>();
-  assert(anotherWebStream instanceof WebReadableStream);
+  const anotherWebStream: WebStream<string> = new PonyfilledWebReadableStream<Uint8Array>();
+  assert(anotherWebStream instanceof PonyfilledWebReadableStream);
   // @ts-expect-error detect node stream type mismatch
   const nodeNativeStream: NodeWebStream<string> = new NodeNativeReadableStream();
   assert(nodeNativeStream instanceof NodeNativeReadableStream);
