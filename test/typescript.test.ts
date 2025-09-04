@@ -40,6 +40,9 @@ const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
   const anotherStringStream: Stream<Uint8Array> = toStream('chunk');
   assert(anotherStringStream instanceof NodeWebReadableStream);
 
+  // ensure a WebStream can be casted to a ponyfilled stream if needed to access the AsyncIterable
+  for await (const _ of newEmptyWebStream<string>() as PonyfilledWebReadableStream) { _ }
+
   assert(isArrayStream(new ArrayStream())) ; // ensure Array is actually extended in e.g. es5
 
   console.log('TypeScript definitions are correct');

@@ -14,6 +14,7 @@
 // do not implicitly reference others, but it currently disables including libs anywhere
 // (see https://github.com/microsoft/TypeScript/issues/59067)
 /// <reference lib="dom" />
+/// <reference lib="es2018.asynciterable" />
 
 export namespace DOM {
     /*! *****************************************************************************
@@ -103,6 +104,15 @@ export namespace DOM {
          * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStream/tee)
          */
         tee(): [ReadableStream<R>, ReadableStream<R>];
+
+        // The AsyncIterator methods are declared as optional `?` here for informational purposes,
+        // since the default DOM ReadableStream does not implement the AsyncIterator interface:
+        // instead, the `dom.asyncinterable` lib needs to be explicitly included.
+        // This is because the AsyncIterator browser support is still not widespread enough (missing Safari support).
+        // To use the asyncIterable interface when available, users can manually cast a DOM.ReadableStream to
+        // ReadableStream or PonyfilledReadableStream .
+        [Symbol.asyncIterator]?(options?: globalThis.ReadableStreamIteratorOptions): ReadableStreamAsyncIterator<R>;
+        values?(options?: globalThis.ReadableStreamIteratorOptions): ReadableStreamAsyncIterator<R>;
     }
 
     /**
@@ -154,7 +164,13 @@ export namespace DOM {
          */
         writable: WritableStream<W>;
     }
+
+    interface ReadableStreamAsyncIterator<R> extends AsyncIterableIterator<R> {
+        next(): Promise<IteratorResult<R, undefined>>;
+        return?(value?: any): Promise<IteratorResult<R>>;
+    }
 }
 
-export type DomReadableStream<R> = DOM.ReadableStream<R>
+export type DomReadableStream<R> = DOM.ReadableStream<R>;
+
 
