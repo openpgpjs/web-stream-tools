@@ -8,10 +8,14 @@
     "tsconfig.json"
   ],
   "exports": {
-    "types": "./lib/index.d.ts",
+    "types@<5.5": "./lib/types/v4.7-v5.4/index.d.ts",
+    "types": "./lib/types/index.d.ts",
     "import": "./lib/index.js"
   },
-  "types": "./lib/index.d.ts",
+  "typesVersions": {
+    ">=5.5": { ".": ["lib/types/index.d.ts"] },
+    ">=4.7": { ".": ["lib/types/v4.7-v5.4/index.d.ts"] }
+  },
   "main": "./lib/index.js",
   "engines": {
     "node": ">= 18.0.0"
@@ -66,7 +70,7 @@
     "test-type-definitions": "tsc --project test/tsconfig.json && tsx test/typescript.test.ts && npm run test-type-definitions-es5",
     "test-type-definitions-es5": "tsc --project test/tsconfig.es5.json && tsx --tsconfig test/tsconfig.es5.json test/typescript.test.ts",
     "test-browser": "karma start karma.conf.cjs",
-    "test-node": "ts-mocha -n loader=ts-node/esm ./test/node.test.ts ./test/common.test.ts",
+    "test-node": "NODE_OPTIONS='--import=tsx' mocha ./test/node.test.ts ./test/common.test.ts",
     "lint": "eslint lib test",
     "docs": "jsdoc --configure .jsdocrc.cjs --destination docs --readme README.md lib && printf '%s' 'web-stream-tools.openpgpjs.org' > docs/CNAME",
     "preversion": "rm -rf docs",
