@@ -1,0 +1,7 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true, // code tested by tsx
+        "lib": ["DOM.AsyncIterable"], // for browser tests (for-await)
+    },
+}
