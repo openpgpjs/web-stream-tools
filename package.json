@@ -1,6 +1,6 @@
 {
   "name": "@openpgp/web-stream-tools",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Utility functions for WhatWG Streams",
   "type": "module",
   "files": [
@@ -13,8 +13,16 @@
     "import": "./lib/index.js"
   },
   "typesVersions": {
-    ">=5.5": { ".": ["lib/types/index.d.ts"] },
-    ">=4.7": { ".": ["lib/types/v4.7-v5.4/index.d.ts"] }
+    ">=5.5": {
+      ".": [
+        "lib/types/index.d.ts"
+      ]
+    },
+    ">=4.7": {
+      ".": [
+        "lib/types/v4.7-v5.4/index.d.ts"
+      ]
+    }
   },
   "main": "./lib/index.js",
   "engines": {
