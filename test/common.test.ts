@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 // @ts-expect-error Missing type definitions
-import { toStream, toArrayStream, readToEnd, slice, pipe, ArrayStream } from '@openpgp/web-stream-tools';
+import { toStream, toArrayStream, readToEnd, slice, pipe, ArrayStream, transform, transformAsync } from  '@openpgp/web-stream-tools';
 
 describe('Common integration tests', () => {
   it('toStream/readToEnd', async () => {
@@ -46,5 +46,45 @@ describe('Common integration tests', () => {
     const outputStream = new ArrayStream();
     pipe(inputStream, outputStream);
     expect(await readToEnd(outputStream)).to.equal('chunk');
+  });
+
+  it('transform non-stream', async () => {
+    const input = 'chunk';
+    const transformed = transform(input, (str: string) => str.toUpperCase());
+    expect(transformed).to.equal('CHUNK');
+  });
+
+  it('transform arraystream', async () => {
+    const input = 'chunk';
+    const streamedData = toArrayStream(input);
+    const transformed = transform(streamedData, (str: string) => str.toUpperCase());
+    expect(await readToEnd(transformed)).to.equal('CHUNK');
+  });
+
+  it('transform stream', async () => {
+    const input = 'chunk';
+    const streamedData = toStream(input);
+    const transformed = transform(streamedData, (str: string) => str.toUpperCase());
+    expect(await readToEnd(transformed)).to.equal('CHUNK');
+  });
+
+  it('transformAsync non-stream', async () => {
+    const input = 'chunk';
+    const transformed = await transformAsync(input, async (str: string) => str.toUpperCase());
+    expect(transformed).to.equal('CHUNK');
+  });
+
+  it('transformAsync arraystream', async () => {
+    const input = 'chunk';
+    const streamedData = toArrayStream(input);
+    const transformed = await transformAsync(streamedData, async (str: string) => str.toUpperCase());
+    expect(await readToEnd(transformed)).to.equal('CHUNK');
+  });
+
+  it('transformAsync stream', async () => {
+    const input = 'chunk';
+    const streamedData = toStream(input);
+    const transformed = await transformAsync(streamedData, async (str: string) => str.toUpperCase());
+    expect(await readToEnd(transformed)).to.equal('CHUNK');
   });
 });
