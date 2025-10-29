@@ -27,3 +27,17 @@ export function slice<T extends Data, InputType extends MaybeStream<T>>(
   begin: number,
   end?: number | typeof Infinity
 ): InputType; // same as 'typeof input'
+
+export function transform<InData extends Data, InputType extends MaybeStream<InData>, OutData extends Data = InData>(
+  input: InputType,
+  process?: (chunk: InData) => OutData | void,
+  finish?: () => OutData | void,
+  queuingStrategy?: { highWaterMark: number }
+): InputType extends InData ? OutData : Stream<OutData>;
+
+export function transformAsync<InData extends Data, InputType extends MaybeStream<InData>, OutData extends Data = InData>(
+  input: InputType,
+  process?: (chunk: InData) => Promise<OutData> | Promise<void>,
+  finish?: (chunk: InData) => Promise<OutData> | Promise<void>,
+  queuingStrategy?: { highWaterMark: number }
+): InputType extends InData ? OutData : Stream<OutData>;
