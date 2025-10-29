@@ -2,7 +2,7 @@ import assert from 'assert';
 import { Readable as NodeNativeReadableStream } from 'stream';
 import { ReadableStream as NodeWebReadableStream } from 'node:stream/web';
 import { ReadableStream as PonyfilledWebReadableStream } from 'web-streams-polyfill';
-import { WebStream, NodeWebStream, Stream, toStream, Data } from '@openpgp/web-stream-tools';
+import { WebStream, NodeWebStream, Stream, toStream, Data, transform, transformAsync } from '@openpgp/web-stream-tools';
 import { readToEnd } from '@openpgp/web-stream-tools';
 // @ts-ignore missing defs
 import { ArrayStream, isArrayStream } from '@openpgp/web-stream-tools';
@@ -44,6 +44,33 @@ const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
   for await (const _ of newEmptyWebStream<string>() as PonyfilledWebReadableStream) { _ }
 
   assert(isArrayStream(new ArrayStream())) ; // ensure Array is actually extended in e.g. es5
+
+  const transformDefaultOutputStreamString: Stream<string> = transform(newEmptyWebStream<string>());
+  assert(transformDefaultOutputStreamString instanceof NodeWebReadableStream);
+  const transformDefaultOutputString: string = transform('string');
+  assert(typeof transformDefaultOutputString === 'string');
+  const transformProcessOutputStreamBytes: Stream<Uint8Array<ArrayBuffer>> = transform(
+    newEmptyWebStream<string>(),
+    () => new Uint8Array()
+  );
+  assert(transformProcessOutputStreamBytes instanceof NodeWebReadableStream);
+  transform(
+    newEmptyWebStream<string>(),
+    () => new Uint8Array(),
+    // @ts-expect-error `finish()` and `process()` output types must match
+    () => ''
+  );
+  transform(
+    newEmptyWebStream<string>(),
+    // @ts-expect-error on async callback
+    async () => new Uint8Array(),
+  );
+  transformAsync(
+    newEmptyWebStream<string>(),
+    async () => new Uint8Array(),
+    // @ts-expect-error on sync callback
+    () => new Uint8Array()
+  );
 
   console.log('TypeScript definitions are correct');
 })().catch(e => {
