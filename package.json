@@ -79,7 +79,7 @@
     "test-type-definitions-es5": "tsc --project test/tsconfig.es5.json && tsx --tsconfig test/tsconfig.es5.json test/typescript.test.ts",
     "test-browser": "karma start karma.conf.cjs",
     "test-node": "NODE_OPTIONS='--import=tsx' mocha ./test/node.test.ts ./test/common.test.ts",
-    "lint": "eslint lib test",
+    "lint": "eslint lib/** test/** --ext .d.ts",
     "docs": "jsdoc --configure .jsdocrc.cjs --destination docs --readme README.md lib && printf '%s' 'web-stream-tools.openpgpjs.org' > docs/CNAME",
     "preversion": "rm -rf docs",
     "version": "npm run docs && git add -A docs",
