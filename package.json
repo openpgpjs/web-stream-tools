@@ -77,6 +77,7 @@
   "scripts": {
     "test-type-definitions": "tsc --project test/tsconfig.json && tsx test/typescript.test.ts && npm run test-type-definitions-es5",
     "test-type-definitions-es5": "tsc --project test/tsconfig.es5.json && tsx --tsconfig test/tsconfig.es5.json test/typescript.test.ts",
+    "test-type-definitions-legacy": "tsc --project test/tsconfig.v4.7.json && tsx test/typescript.v4.7.test.ts",
     "test-browser": "karma start karma.conf.cjs",
     "test-node": "NODE_OPTIONS='--import=tsx' mocha ./test/node.test.ts ./test/common.test.ts",
     "lint": "eslint lib/** test/** --ext .d.ts",

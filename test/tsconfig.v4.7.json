@@ -1,0 +1,7 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true, // code tested by tsx
+    },
+    "include": ["./typescript.v4.7.test.ts"]
+}

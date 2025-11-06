@@ -51,6 +51,8 @@ jobs:
     - uses: actions/setup-node@v4
     - run: npm ci
     - run: npm run test-type-definitions
+    - run: npm i typescript@4.7 @types/node@18.0.0
+    - run: npm run test-type-definitions-legacy
 
   lint:
     name: ESLint
