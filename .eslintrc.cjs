@@ -25,7 +25,10 @@ module.exports = {
       "import"
   ],
   "rules": {
-      "no-unused-vars": ["error", {"args": "none"}],
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+      "no-redeclare": "off",
+      "@typescript-eslint/no-redeclare": "error",
       "prefer-spread": "off",
       "no-restricted-syntax": "off",
       "consistent-return": "off",
