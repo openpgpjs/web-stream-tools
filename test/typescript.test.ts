@@ -46,30 +46,42 @@ const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
 
   assert(isArrayStream(new ArrayStream())) ; // ensure Array is actually extended in e.g. es5
 
-  const transformDefaultOutputStreamString: Stream<string> = transform(newEmptyWebStream<string>());
-  assert(transformDefaultOutputStreamString instanceof NodeWebReadableStream);
-  const transformDefaultOutputString: string = transform('string');
-  assert(typeof transformDefaultOutputString === 'string');
+  const transformDefaultOutput: undefined = transform('string');
+  assert(transformDefaultOutput === undefined);
+  const transformOutputStreamString: Stream<string> = transform(newEmptyWebStream<string>(), () => '');
+  assert(transformOutputStreamString instanceof NodeWebReadableStream);
+  const transformProcessOutputString: string = transform('string', () => '');
+  assert(typeof transformProcessOutputString === 'string');
+  const transformConcatOutputString: string = transform('string', () => '', () => '');
+  assert(typeof transformConcatOutputString === 'string');
+  const transformFinishOutputString: string = transform('string', undefined, () => '');
+  assert(typeof transformFinishOutputString === 'string');
   const transformProcessOutputStreamBytes: Stream<Uint8Array<ArrayBuffer>> = transform(
     newEmptyWebStream<string>(),
     () => new Uint8Array()
   );
   assert(transformProcessOutputStreamBytes instanceof NodeWebReadableStream);
+  // @ts-expect-error `finish()` and `process()` output types must match
   transform(
     newEmptyWebStream<string>(),
     () => new Uint8Array(),
-    // @ts-expect-error `finish()` and `process()` output types must match
     () => ''
   );
+  // @ts-expect-error on async callback
   transform(
     newEmptyWebStream<string>(),
-    // @ts-expect-error on async callback
-    async () => new Uint8Array(),
+    async () => 'string',
   );
+  const transformAsyncOutputStreamStringToBytes: Stream<Uint8Array> = await transformAsync(
+    newEmptyWebStream<string>(),
+    async () => new Uint8Array(),
+    async () => new Uint8Array()
+  );
+  assert(transformAsyncOutputStreamStringToBytes instanceof NodeWebReadableStream);
+  // @ts-expect-error on sync callback
   transformAsync(
     newEmptyWebStream<string>(),
     async () => new Uint8Array(),
-    // @ts-expect-error on sync callback
     () => new Uint8Array()
   );
 
