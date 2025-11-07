@@ -26,44 +26,16 @@ export function slice<T extends Data, InputType extends MaybeStream<T>>(
   end?: number | typeof Infinity
 ): InputType; // same as 'typeof input'
 
-type EmptyStream = DomReadableStream<undefined> | NodeWebReadableStream<undefined>;
-
-// We use function overload instead of type parameter inference because the latter cannot capture the
-// default values set in JS for `process` and `finish`, which overcomplicates things
-export function transform<InData extends Data, InputType extends MaybeStream<InData>, OutData extends Data = InData>(
+export function transform<InData extends Data, InputType extends MaybeStream<InData>, OutData extends Data>(
   input: InputType,
-  process: (chunk: InData) => OutData,
-  finish?: () => OutData | undefined,
+  process?: undefined | ((chunk: InData) => OutData | undefined),
+  finish?: undefined | (() => OutData | undefined),
   queuingStrategy?: { highWaterMark: number }
 ): InputType extends InData ? OutData : Stream<OutData>;
-export function transform<InData extends Data, InputType extends MaybeStream<InData>, OutData extends Data = InData>(
-  input: InputType,
-  process: undefined | ((chunk: InData) => undefined),
-  finish: () => OutData,
-  queuingStrategy?: { highWaterMark: number }
-): InputType extends InData ? OutData : Stream<OutData>;
-export function transform<InData extends Data, InputType extends MaybeStream<InData>, _OutData extends Data = InData>(
-  input: InputType,
-  process?: (chunk: InData) => undefined,
-  finish?: () => undefined,
-  queuingStrategy?: { highWaterMark: number }
-): InputType extends InData ? undefined : EmptyStream;
 
-export function transformAsync<InData extends Data, InputType extends MaybeStream<InData>, OutData extends Data = InData>(
+export function transformAsync<InData extends Data, InputType extends MaybeStream<InData>, OutData extends Data>(
   input: InputType,
-  process: (chunk: InData) => Promise<OutData>,
-  finish?: () => Promise<OutData> | Promise<undefined>,
+  process?: undefined | ((chunk: InData) => Promise<OutData | undefined>),
+  finish?: undefined | (() => Promise<OutData | undefined>),
   queuingStrategy?: { highWaterMark: number }
 ): Promise<InputType extends InData ? OutData : Stream<OutData>>;
-export function transformAsync<InData extends Data, InputType extends MaybeStream<InData>, OutData extends Data = InData>(
-  input: InputType,
-  process: undefined | ((chunk: InData) => Promise<undefined>),
-  finish: () => Promise<OutData>,
-  queuingStrategy?: { highWaterMark: number }
-): Promise<InputType extends InData ? OutData : Stream<OutData>>;
-export function transformAsync<InData extends Data, InputType extends MaybeStream<InData>, _OutData extends Data = InData>(
-  input: InputType,
-  process?: (chunk: InData) => Promise<undefined>,
-  finish?: () => Promise<undefined>,
-  queuingStrategy?: { highWaterMark: number }
-): Promise<InputType extends InData ? undefined : EmptyStream>;
