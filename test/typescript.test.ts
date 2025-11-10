@@ -3,8 +3,7 @@ import assert from 'assert';
 import { Readable as NodeNativeReadableStream } from 'stream';
 import { ReadableStream as NodeWebReadableStream } from 'node:stream/web';
 import { ReadableStream as PonyfilledWebReadableStream } from 'web-streams-polyfill';
-import { type WebStream, type NodeWebStream, type Stream, toStream, type Data, transform, transformAsync } from '@openpgp/web-stream-tools';
-import { readToEnd } from '@openpgp/web-stream-tools';
+import { type WebStream, type NodeWebStream, type Stream, toStream, type Data, transform, transformAsync, type MaybeStream, readToEnd } from '@openpgp/web-stream-tools';
 // @ts-expect-error missing defs
 import { ArrayStream, isArrayStream } from '@openpgp/web-stream-tools';
 
@@ -46,6 +45,12 @@ const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
 
   assert(isArrayStream(new ArrayStream())) ; // ensure Array is actually extended in e.g. es5
 
+  const transformDefaultOutput: undefined = transform('string');
+  assert(transformDefaultOutput === undefined);
+  const transformUndefinedOutput: void = transform('string', () => {});
+  assert(transformUndefinedOutput === undefined);
+  const transformStreamUndefinedOutput: Stream<never> = transform(newEmptyWebStream(), () => {});
+  assert(transformStreamUndefinedOutput instanceof NodeWebReadableStream);
   const transformOutputStreamString: Stream<string> = transform(newEmptyWebStream<string>(), () => '');
   assert(transformOutputStreamString instanceof NodeWebReadableStream);
   const transformProcessOutputString: string = transform('string', () => '');
@@ -59,8 +64,15 @@ const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
     () => new Uint8Array()
   );
   assert(transformProcessOutputStreamBytes instanceof NodeWebReadableStream);
-  // @ts-expect-error `finish()` and `process()` output types must match
-  transform(newEmptyWebStream<string>(), () => new Uint8Array(), () => '');
+  const filterStream = <S extends MaybeStream<Data>>(stream: S, filterFn: (data: any) => boolean) => (
+    transform(stream, (chunk: Data) => filterFn(chunk) ? '' : undefined)
+  );
+  const transformUnionOutput: string | undefined = filterStream('string', () => false);
+  assert(transformUnionOutput === undefined);
+  const transformMismatchingProcessFinishOutput: Stream<string | Uint8Array<ArrayBuffer>> =
+    transform(newEmptyWebStream<string>(), () => new Uint8Array(), () => '');
+  assert(transformMismatchingProcessFinishOutput instanceof NodeWebReadableStream);
+
   // @ts-expect-error on async callback
   transform(newEmptyWebStream<string>(), async () => 'string');
   const transformAsyncOutputStreamStringToBytes: Stream<Uint8Array> = await transformAsync(

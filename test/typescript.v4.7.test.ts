@@ -42,6 +42,10 @@ const newEmptyTypedNodeWebStream = <T extends Data>() => (
 
   assert(isArrayStream(new ArrayStream())) ; // ensure Array is actually extended in e.g. es5
 
+  const transformDefaultOutput: undefined = transform('string');
+  assert(transformDefaultOutput === undefined);
+  const transformStreamUndefinedOutput: Stream<never> = transform(newEmptyTypedNodeWebStream(), () => {});
+  assert(transformStreamUndefinedOutput instanceof NodeWebReadableStream);
   const transformOutputStreamString: Stream<string> = transform(newEmptyTypedNodeWebStream<string>(), () => '');
   assert(transformOutputStreamString instanceof NodeWebReadableStream);
   const transformProcessOutputString: string = transform('string', () => '');
@@ -55,8 +59,9 @@ const newEmptyTypedNodeWebStream = <T extends Data>() => (
     () => new Uint8Array()
   );
   assert(transformProcessOutputStreamBytes instanceof NodeWebReadableStream);
-  // @ts-expect-error `finish()` and `process()` output types must match
-  transform(newEmptyTypedNodeWebStream<string>(), () => new Uint8Array(), () => '');
+  const transformMismatchingProcessFinishOutput: Stream<string | Uint8Array> =
+    transform(newEmptyTypedNodeWebStream<string>(), () => new Uint8Array(), () => '');
+  assert(transformMismatchingProcessFinishOutput instanceof NodeWebReadableStream);
   // @ts-expect-error on async callback
   transform(newEmptyTypedNodeWebStream<string>(), async () => 'string');
   const transformAsyncOutputStreamStringToBytes: Stream<Uint8Array> = await transformAsync(
