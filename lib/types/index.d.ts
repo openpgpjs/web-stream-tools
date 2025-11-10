@@ -26,24 +26,73 @@ export function slice<T extends Data, InputType extends MaybeStream<T>>(
   end?: number | typeof Infinity
 ): InputType; // same as 'typeof input'
 
-export function transform<InData extends Data, InputType extends MaybeStream<InData>, OutData extends Data>(
+// export function transform<
+//   InData extends Data, InputType extends MaybeStream<InData>,
+//   OutData extends Data,
+//   ProcessFn extends (
+//     ((chunk: InData) => OutData) |
+//     ((chunk: InData) => undefined) |
+//     ((chunk: InData) => OutData | undefined) |
+//   ) = (chunk: InData) => undefined,
+//   FinishFn extends ((() => OutData) | (() => OutData | undefined) | (() => undefined)) = () => undefined
+// >(
+//   input: InputType,
+//   process?: ProcessFn,
+//   finish?: FinishFn,
+//   queuingStrategy?: { highWaterMark: number }
+// ): InputType extends InData ? typeof process extends undefined ? ReturnType<FinishFn> : ReturnType<ProcessFn> : Stream<OutData>;
+export function transform<
+  InData extends Data, InputType extends MaybeStream<InData>,
+  OutData extends Data,
+  OutDataFinish extends OutData,
+  // ProcessFnOut extends OutData | undefined | void,
+  // FinishFnOut extends OutData | undefined | void,
+  ProcessFn extends ((chunk: InData) => OutData | undefined | void) = () => undefined,
+  FinishFn extends (() => OutDataFinish | undefined | void) = () => undefined,
+>(
   input: InputType,
-  process: (chunk: InData) => OutData,
-  finish?: (() => OutData | undefined | void),
+  process?: ProcessFn,
+  finish?: FinishFn,
   queuingStrategy?: { highWaterMark: number }
-): InputType extends InData ? OutData : Stream<OutData>;
-export function transform<InData extends Data, InputType extends MaybeStream<InData>, OutData extends Data>(
-  input: InputType,
-  process: undefined | ((chunk: InData) => undefined | void),
-  finish: () => OutData,
-  queuingStrategy?: { highWaterMark: number }
-): InputType extends InData ? OutData : Stream<OutData>;
-export function transform<InData extends Data, InputType extends MaybeStream<InData>, _OutData extends Data>(
-  input: InputType,
-  process?: ((chunk: InData) => undefined | void),
-  finish?: (() => undefined | void),
-  queuingStrategy?: { highWaterMark: number }
-): InputType extends InData ? undefined : Stream<never> // empty stream
+): InputType extends InData ?
+  typeof process extends undefined ?
+    typeof finish extends undefined ?
+      undefined /*: Stream<never>*/ :
+      ReturnType<FinishFn> :
+    typeof finish extends undefined ?
+      ReturnType<ProcessFn> :
+      ReturnType<FinishFn> | ReturnType<ProcessFn>
+
+// // issue: typeof process is undefined | fn, ie never undefined
+// export function transform<
+//   InData extends Data, InputType extends MaybeStream<InData>,
+//   OutData extends Data,
+//   ProcessFn extends OutData | undefined | void = undefined,
+//   FinishFn extends OutData | undefined | void = undefined
+// >(
+//   input: InputType,
+//   process?: (chunk: InData) => ProcessFn,
+//   finish?: () => FinishFn,
+//   queuingStrategy?: { highWaterMark: number }
+// ): InputType extends InData ? typeof process extends undefined ? FinishFn : ProcessFn : Stream<OutData>;
+
+// export function transform<
+// InData extends Data, InputType extends MaybeStream<InData>,
+// OutData extends Data,
+//   _ProcessFn extends (chunk: InData) => OutData | ((chunk: InData) => OutData | undefined),
+//   FinishFn extends (() => OutData | (() => OutData | undefined))
+// >(
+//   input: InputType,
+//   process: undefined | ((chunk: InData) => undefined | void),
+//   finish: FinishFn,
+//   queuingStrategy?: { highWaterMark: number }
+// ): InputType extends InData ? ReturnType<FinishFn> : Stream<OutData>;
+// export function transform<InData extends Data, InputType extends MaybeStream<InData>, _OutData extends Data>(
+//   input: InputType,
+//   process?: ((chunk: InData) => undefined | void),
+//   finish?: (() => undefined | void),
+//   queuingStrategy?: { highWaterMark: number }
+// ): InputType extends InData ? undefined : Stream<never> // empty stream
 
 export function transformAsync<InData extends Data, InputType extends MaybeStream<InData>, OutData extends Data>(
   input: InputType,

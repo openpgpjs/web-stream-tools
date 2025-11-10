@@ -47,7 +47,7 @@ const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
 
   const transformDefaultOutput: undefined = transform('string');
   assert(transformDefaultOutput === undefined);
-  const transformUndefinedOutput: undefined = transform('string', () => {});
+  const transformUndefinedOutput: void = transform('string', () => {});
   assert(transformUndefinedOutput === undefined);
   const transformStreamUndefinedOutput: Stream<never> = transform(newEmptyWebStream(), () => {});
   assert(transformStreamUndefinedOutput instanceof NodeWebReadableStream);
@@ -64,6 +64,11 @@ const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
     () => new Uint8Array()
   );
   assert(transformProcessOutputStreamBytes instanceof NodeWebReadableStream);
+  const transformUnionOutput = transform(
+    'string',
+    () => Math.random() > 0.5 ? '' : undefined
+  );
+  assert(typeof transformUnionOutput === 'string');
   // @ts-expect-error `finish()` and `process()` output types must match
   transform(newEmptyWebStream<string>(), () => new Uint8Array(), () => '');
   // @ts-expect-error on async callback
