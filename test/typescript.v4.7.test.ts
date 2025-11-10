@@ -41,6 +41,10 @@ const newEmptyTypedNodeWebStream = <T extends Data>() => (
 
   assert(isArrayStream(new ArrayStream())) ; // ensure Array is actually extended in e.g. es5
 
+  const transformDefaultOutput: undefined = transform('string');
+  assert(transformDefaultOutput === undefined);
+  const transformStreamUndefinedOutput: Stream<never> = transform(newEmptyTypedNodeWebStream(), () => {});
+  assert(transformStreamUndefinedOutput instanceof NodeWebReadableStream);
   const transformOutputStreamString: Stream<string> = transform(newEmptyTypedNodeWebStream<string>(), () => '');
   assert(transformOutputStreamString instanceof NodeWebReadableStream);
   const transformProcessOutputString: string = transform('string', () => '');

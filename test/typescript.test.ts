@@ -45,9 +45,15 @@ const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
 
   assert(isArrayStream(new ArrayStream())) ; // ensure Array is actually extended in e.g. es5
 
+  const transformDefaultOutput: undefined = transform('string');
+  assert(transformDefaultOutput === undefined);
+  const transformUndefinedOutput: undefined = transform('string', () => {});
+  assert(transformUndefinedOutput === undefined);
+  const transformStreamUndefinedOutput: Stream<never> = transform(newEmptyWebStream(), () => {});
+  assert(transformStreamUndefinedOutput instanceof NodeWebReadableStream);
   const transformOutputStreamString: Stream<string> = transform(newEmptyWebStream<string>(), () => '');
   assert(transformOutputStreamString instanceof NodeWebReadableStream);
-  const transformProcessOutputString: string = transform('string', () => '');
+  const transformProcessOutputString = transform('string', () => '');
   assert(typeof transformProcessOutputString === 'string');
   const transformConcatOutputString: string = transform('string', () => '', () => '');
   assert(typeof transformConcatOutputString === 'string');
