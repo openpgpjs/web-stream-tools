@@ -58,7 +58,7 @@
     "ts-mocha": "^11.1.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.6",
-    "typescript": "^5.9.2",
+    "typescript": "^5.9.3",
     "web-streams-polyfill": "^4.2.0"
   },
   "peerDependencies": {
