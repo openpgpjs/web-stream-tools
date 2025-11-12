@@ -16,8 +16,7 @@ jobs:
 
     name: Node integration tests (${{ matrix.node-version }})
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: {}
+    permissions: {}
 
     steps:
     - uses: actions/checkout@v5
@@ -30,8 +29,7 @@ jobs:
   test-browsers:
     name: Browser integration tests
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: {}
+    permissions: {}
 
     steps:
       - uses: actions/checkout@v5
