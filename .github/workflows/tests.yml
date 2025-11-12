@@ -16,6 +16,8 @@ jobs:
 
     name: Node integration tests (${{ matrix.node-version }})
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: {}
 
     steps:
     - uses: actions/checkout@v5
@@ -28,6 +30,8 @@ jobs:
   test-browsers:
     name: Browser integration tests
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: {}
 
     steps:
       - uses: actions/checkout@v5
@@ -43,8 +47,9 @@ jobs:
 
   type-definitions:
     name: Test type definitions
-
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # allow comments
 
     steps:
     - uses: actions/checkout@v5
@@ -54,8 +59,9 @@ jobs:
 
   lint:
     name: ESLint
-
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # allow comments
 
     steps:
     - uses: actions/checkout@v5
