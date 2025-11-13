@@ -38,8 +38,7 @@ describe('Node integration tests', () => {
     const { ReadableStream: PolyfilledReadableStream } = await import ('web-streams-polyfill');
 
     const input = 'chunk';
-    // this test is just to keep track that this behaviour is expected: it may not cause a TS error, but always triggers a runtime one
-    // @ts-expect-error
+    // @ts-expect-error - this test is just to keep track that this behaviour is expected: it may not cause a TS error, but always triggers a runtime one
     const stream: NodeWebReadableStream<string> = new PolyfilledReadableStream<string>({
       start(controller) {
         controller.enqueue(input);

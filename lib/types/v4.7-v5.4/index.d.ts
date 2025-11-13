@@ -5,7 +5,7 @@ type DomReadableStream<R> = ReadableStream<R>;
 
 type Data = Uint8Array | string;
 
-export type WebStream<T extends Data> = DomReadableStream<T>
+export type WebStream<T extends Data> = DomReadableStream<T>;
 export type NodeWebStream<T extends Data> = NodeWebReadableStream<T>;
 
 type Stream<T extends Data> = WebStream<T> | NodeWebStream<T>;

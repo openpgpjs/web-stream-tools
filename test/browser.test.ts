@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { toStream, readToEnd, WebStream } from '@openpgp/web-stream-tools';
+import { toStream, readToEnd, type WebStream } from '@openpgp/web-stream-tools';
 
 describe('Browser integration tests', () => {
   it('accepts readable stream', async () => {
@@ -26,4 +26,4 @@ describe('Browser integration tests', () => {
     // NB: this works because test/tsconfig.json includes the DOM.asyncIterable lib
     for await (const chunk of stream as ReadableStream) { expect(chunk).to.not.be.undefined; }
   });
-})
+});

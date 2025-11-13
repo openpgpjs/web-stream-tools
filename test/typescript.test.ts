@@ -1,14 +1,15 @@
+/* global process */
 import assert from 'assert';
 import { Readable as NodeNativeReadableStream } from 'stream';
 import { ReadableStream as NodeWebReadableStream } from 'node:stream/web';
 import { ReadableStream as PonyfilledWebReadableStream } from 'web-streams-polyfill';
-import { WebStream, NodeWebStream, Stream, toStream, Data } from '@openpgp/web-stream-tools';
+import { type WebStream, type NodeWebStream, type Stream, toStream, type Data } from '@openpgp/web-stream-tools';
 import { readToEnd } from '@openpgp/web-stream-tools';
-// @ts-ignore missing defs
+// @ts-expect-error missing defs
 import { ArrayStream, isArrayStream } from '@openpgp/web-stream-tools';
 
 const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
-  new PonyfilledWebReadableStream<T>({ start(ctrl) { ctrl.close() } })
+  new PonyfilledWebReadableStream<T>({ start(ctrl) { ctrl.close(); } })
 );
 
 (async () => {
@@ -41,7 +42,7 @@ const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
   assert(anotherStringStream instanceof NodeWebReadableStream);
 
   // ensure a WebStream can be casted to a ponyfilled stream if needed to access the AsyncIterable
-  for await (const _ of newEmptyWebStream<string>() as PonyfilledWebReadableStream) { _ }
+  for await (const _ of newEmptyWebStream<string>() as PonyfilledWebReadableStream) {}
 
   assert(isArrayStream(new ArrayStream())) ; // ensure Array is actually extended in e.g. es5
 
