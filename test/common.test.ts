@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 // @ts-expect-error Missing type definitions
-import { toStream, toArrayStream, readToEnd, slice, pipe, ArrayStream, transform, transformAsync } from  '@openpgp/web-stream-tools';
+import { toStream, toArrayStream, readToEnd, slice, pipe, ArrayStream, transform, transformAsync, type Stream } from  '@openpgp/web-stream-tools';
 
 describe('Common integration tests', () => {
   it('toStream/readToEnd', async () => {
@@ -42,7 +42,7 @@ describe('Common integration tests', () => {
 
   it('pipe from arraystream to arraystream', async () => {
     const input = 'chunk';
-    const inputStream = toArrayStream(input);
+    const inputStream: Stream<string> = toArrayStream(input);
     const outputStream = new ArrayStream();
     pipe(inputStream, outputStream);
     expect(await readToEnd(outputStream)).to.equal('chunk');
@@ -56,7 +56,7 @@ describe('Common integration tests', () => {
 
   it('transform arraystream', async () => {
     const input = 'chunk';
-    const streamedData = toArrayStream(input);
+    const streamedData: Stream<string> = toArrayStream(input);
     const transformed = transform(streamedData, (str: string) => str.toUpperCase());
     expect(await readToEnd(transformed)).to.equal('CHUNK');
   });
@@ -76,7 +76,7 @@ describe('Common integration tests', () => {
 
   it('transformAsync arraystream', async () => {
     const input = 'chunk';
-    const streamedData = toArrayStream(input);
+    const streamedData: Stream<string> = toArrayStream(input);
     const transformed = await transformAsync(streamedData, async (str: string) => str.toUpperCase());
     expect(await readToEnd(transformed)).to.equal('CHUNK');
   });
