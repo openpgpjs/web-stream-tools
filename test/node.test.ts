@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { Readable as NodeNativeReadableStream } from 'node:stream';
 import { ReadableStream as NodeWebReadableStream } from 'node:stream/web';
 import { toStream, readToEnd } from '@openpgp/web-stream-tools';

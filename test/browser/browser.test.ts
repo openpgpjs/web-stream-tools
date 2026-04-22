@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { describe, it, expect } from 'vitest';
 import { toStream, readToEnd, type WebStream } from '@openpgp/web-stream-tools';
 
 describe('Browser integration tests', () => {
