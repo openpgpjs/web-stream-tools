@@ -58,6 +58,9 @@ export namespace DOM {
          */
     getWriter(): WritableStreamDefaultWriter<W>;
   }
+  interface ReadableStreamBYOBReaderReadOptions {
+    min?: number;
+  }
   /**
      * The `ReadableStream` interface of the Streams API represents a readable stream of byte data.
      *
@@ -126,7 +129,12 @@ export namespace DOM {
          *
          * [MDN Reference](https://developer.mozilla.org/docs/Web/API/ReadableStreamBYOBReader/read)
          */
-    read<T extends ArrayBufferView>(view: T): Promise<globalThis.ReadableStreamReadResult<T>>;
+    read<T extends Exclude<BufferSource, ArrayBuffer>>(
+      view: T,
+    // `options` are included in TS v6 definitions but not in v5; to keep the types common
+    // we redeclare `ReadableStreamBYOBReaderReadOptions`
+      options?: ReadableStreamBYOBReaderReadOptions
+    ): Promise<globalThis.ReadableStreamReadResult<T>>;
     /**
          * The **`releaseLock()`** method of the ReadableStreamBYOBReader interface releases the reader's lock on the stream.
          *
