@@ -1,6 +1,14 @@
 import { expect } from 'chai';
-// @ts-expect-error Missing type definitions
-import { toStream, toArrayStream, readToEnd, slice, pipe, ArrayStream, transform, transformAsync, type Stream } from  '@openpgp/web-stream-tools';
+import {
+  toStream,
+  // @ts-expect-error Missing type definitions
+  toArrayStream, pipe, ArrayStream,
+  readToEnd,
+  slice,
+  transform,
+  transformAsync,
+  type Stream
+} from  '@openpgp/web-stream-tools';
 
 describe('Common integration tests', () => {
   it('toStream/readToEnd', async () => {

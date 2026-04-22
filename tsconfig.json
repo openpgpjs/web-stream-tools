@@ -9,9 +9,11 @@
         "allowJs": true,
         "paths": {
             "@openpgp/web-stream-tools": ["."]
-        }
+        },
+        "noEmit": true
     },
     "exclude": [
         "node_modules",
+        "docs"
     ],
 }
