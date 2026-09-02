@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false # if tests for one version fail, continue with the rest
       matrix:
-        node-version: [18.x, '20.x', '22.x', '24.x']
+        node-version: [22.x, 24.x, 26.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     name: Node integration tests (${{ matrix.node-version }})
@@ -54,7 +54,7 @@ jobs:
     - uses: actions/setup-node@v7
     - run: npm ci --legacy-peer-deps
     - run: npm run test-type-definitions
-    - run: npm i typescript@4.7 @types/node@18.0.0 --legacy-peer-deps
+    - run: npm i typescript@4.7 @types/node@22.0.0 --legacy-peer-deps
     - run: npm run test-type-definitions-legacy
 
   lint:
