@@ -69,8 +69,8 @@
     }
   },
   "scripts": {
-    "test-type-definitions": "tsc --project test/tsconfig.json && tsx test/typescript.test.ts && npm run test-type-definitions-es5",
-    "test-type-definitions-es5": "tsc --project test/tsconfig.es5.json && tsx --tsconfig test/tsconfig.es5.json test/typescript.test.ts",
+    "test-type-definitions": "tsc --project test/tsconfig.json && tsx test/typescript.test.ts && npm run test-type-definitions-min-target",
+    "test-type-definitions-min-target": "tsc --project test/tsconfig.minTarget.json && tsx --tsconfig test/tsconfig.minTarget.json test/typescript.test.ts",
     "test-type-definitions-legacy": "tsc --project test/tsconfig.v4.7.json && tsx test/typescript.v4.7.test.ts",
     "test-browser": "vitest --config test/vitest.config.ts --run --project browser",
     "test-node": "vitest --config test/vitest.config.ts --run --project node",
