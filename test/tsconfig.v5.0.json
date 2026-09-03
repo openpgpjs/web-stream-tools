@@ -4,5 +4,5 @@
         "noEmit": true, // code tested by tsx
         "skipLibCheck": true
     },
-    "include": ["./typescript.v4.7.test.ts"]
+    "include": ["./typescript.test.ts"]
 }

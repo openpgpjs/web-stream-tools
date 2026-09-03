@@ -8,7 +8,7 @@
     "tsconfig.json"
   ],
   "exports": {
-    "types@<5.5": "./lib/types/v4.7-v5.4/index.d.ts",
+    "types@<5.5": "./lib/types/v5.0-v5.4/index.d.ts",
     "types": "./lib/types/index.d.ts",
     "import": "./lib/index.js"
   },
@@ -18,9 +18,9 @@
         "lib/types/index.d.ts"
       ]
     },
-    ">=4.7": {
+    ">=5.0": {
       ".": [
-        "lib/types/v4.7-v5.4/index.d.ts"
+        "lib/types/v5.0-v5.4/index.d.ts"
       ]
     }
   },
@@ -58,7 +58,7 @@
   },
   "peerDependencies": {
     "@types/node": ">=22.0.0",
-    "typescript": ">=4.7"
+    "typescript": ">=5.0"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -71,7 +71,7 @@
   "scripts": {
     "test-type-definitions": "tsc --project test/tsconfig.json && tsx test/typescript.test.ts && npm run test-type-definitions-min-target",
     "test-type-definitions-min-target": "tsc --project test/tsconfig.minTarget.json && tsx --tsconfig test/tsconfig.minTarget.json test/typescript.test.ts",
-    "test-type-definitions-legacy": "tsc --project test/tsconfig.v4.7.json && tsx test/typescript.v4.7.test.ts",
+    "test-type-definitions-legacy": "tsc -v | grep -q 'Version 5\\.0\\.' && tsc --project test/tsconfig.v5.0.json && tsx test/typescript.test.ts",
     "test-browser": "vitest --config test/vitest.config.ts --run --project browser",
     "test-node": "vitest --config test/vitest.config.ts --run --project node",
     "lint": "eslint lib test eslint.config.js",

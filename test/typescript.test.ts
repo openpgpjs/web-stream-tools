@@ -59,7 +59,7 @@ const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
   assert(typeof transformConcatOutputString === 'string');
   const transformFinishOutputString: string = transform('string', undefined, () => '');
   assert(typeof transformFinishOutputString === 'string');
-  const transformProcessOutputStreamBytes: Stream<Uint8Array<ArrayBuffer>> = transform(
+  const transformProcessOutputStreamBytes: Stream<Uint8Array> = transform(
     newEmptyWebStream<string>(),
     () => new Uint8Array()
   );
@@ -69,7 +69,7 @@ const newEmptyWebStream = <T extends Data>(): WebStream<T> => (
   );
   const transformUnionOutput: string | undefined = filterStream('string', () => false);
   assert(transformUnionOutput === undefined);
-  const transformMismatchingProcessFinishOutput: Stream<string | Uint8Array<ArrayBuffer>> =
+  const transformMismatchingProcessFinishOutput: Stream<string | Uint8Array> =
     transform(newEmptyWebStream<string>(), () => new Uint8Array(), () => '');
   assert(transformMismatchingProcessFinishOutput instanceof NodeWebReadableStream);
 
