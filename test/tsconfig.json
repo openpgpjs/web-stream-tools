@@ -2,6 +2,6 @@
     "extends": "../tsconfig.json",
     "compilerOptions": {
         "noEmit": true, // code tested by tsx
-        "types": ["node", "mocha", "chai"]
+        "types": ["node"]
     },
 }

@@ -2,7 +2,7 @@
     "extends": "../tsconfig.json",
     "compilerOptions": {
         "noEmit": true, // code tested by tsx
-        "types": ["mocha", "chai"], // no node types
+        "types": [], // no node types
         "lib": [] // DOM.AsyncIterable is included in the main DOM types in v6
     },
 }

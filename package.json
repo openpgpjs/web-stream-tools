@@ -8,7 +8,7 @@
     "tsconfig.json"
   ],
   "exports": {
-    "types@<5.5": "./lib/types/v4.7-v5.4/index.d.ts",
+    "types@<5.5": "./lib/types/v5.0-v5.4/index.d.ts",
     "types": "./lib/types/index.d.ts",
     "import": "./lib/index.js"
   },
@@ -18,15 +18,15 @@
         "lib/types/index.d.ts"
       ]
     },
-    ">=4.7": {
+    ">=5.0": {
       ".": [
-        "lib/types/v4.7-v5.4/index.d.ts"
+        "lib/types/v5.0-v5.4/index.d.ts"
       ]
     }
   },
   "main": "./lib/index.js",
   "engines": {
-    "node": ">= 18.0.0"
+    "node": ">= 22.0.0"
   },
   "repository": {
     "type": "git",
@@ -42,34 +42,23 @@
     "@eslint/js": "^10.0.1",
     "@openpgp/jsdoc": "^4.0.4",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@types/chai": "^5.2.3",
-    "@types/mocha": "^10.0.10",
     "@types/node": "^24.12.4",
-    "chai": "^6.2.2",
+    "@vitest/browser-playwright": "^4.1.5",
     "eslint": "^10.4.1",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-chai-friendly": "^1.2.0",
     "eslint-plugin-import": "^2.32.0",
     "globals": "^17.6.0",
-    "karma": "^6.4.4",
-    "karma-chrome-launcher": "^3.2.0",
-    "karma-mocha": "^2.0.1",
-    "karma-mocha-reporter": "^2.2.5",
-    "karma-webpack": "^5.0.1",
-    "mocha": "^11.7.6",
     "playwright": "^1.60.0",
-    "ts-loader": "^9.6.0",
-    "ts-mocha": "^11.1.0",
-    "ts-node": "^10.9.2",
     "tsx": "^4.22.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.0",
-    "web-streams-polyfill": "^4.3.0",
-    "webpack": "^5.107.2"
+    "vitest": "^4.1.5",
+    "web-streams-polyfill": "^4.3.0"
   },
   "peerDependencies": {
-    "@types/node": ">=18.0.0",
-    "typescript": ">=4.7"
+    "@types/node": ">=22.0.0",
+    "typescript": ">=5.0"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -80,11 +69,11 @@
     }
   },
   "scripts": {
-    "test-type-definitions": "tsc --project test/tsconfig.json && tsx test/typescript.test.ts && npm run test-type-definitions-es5",
-    "test-type-definitions-es5": "tsc --project test/tsconfig.es5.json && tsx --tsconfig test/tsconfig.es5.json test/typescript.test.ts",
-    "test-type-definitions-legacy": "tsc --project test/tsconfig.v4.7.json && tsx test/typescript.v4.7.test.ts",
-    "test-browser": "karma start karma.conf.cjs",
-    "test-node": "NODE_OPTIONS='--import=tsx' mocha ./test/node.test.ts ./test/common.test.ts",
+    "test-type-definitions": "tsc --project test/tsconfig.json && tsx test/typescript.test.ts && npm run test-type-definitions-min-target",
+    "test-type-definitions-min-target": "tsc --project test/tsconfig.minTarget.json && tsx --tsconfig test/tsconfig.minTarget.json test/typescript.test.ts",
+    "test-type-definitions-legacy": "tsc -v | grep -q 'Version 5\\.0\\.' && tsc --project test/tsconfig.v5.0.json && tsx test/typescript.test.ts",
+    "test-browser": "vitest --config test/vitest.config.ts --run --project browser",
+    "test-node": "vitest --config test/vitest.config.ts --run --project node",
     "lint": "eslint lib test eslint.config.js",
     "docs": "jsdoc --configure .jsdocrc.cjs --destination docs --readme README.md lib && printf '%s' 'web-stream-tools.openpgpjs.org' > docs/CNAME",
     "preversion": "rm -rf docs",
