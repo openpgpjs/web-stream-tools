@@ -3,7 +3,6 @@ import eslint from '@eslint/js';
 import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 import globals from 'globals';
-// @ts-expect-error missing declarations
 import pluginChaiFriendly from 'eslint-plugin-chai-friendly';
 import pluginImport from 'eslint-plugin-import';
 import pluginStylistic from '@stylistic/eslint-plugin';
@@ -30,6 +29,7 @@ export default defineConfig(
       }
     },
     plugins: {
+      // @ts-expect-error with the inferred type
       'chai-friendly': pluginChaiFriendly,
       'import': pluginImport,
       '@stylistic': pluginStylistic
